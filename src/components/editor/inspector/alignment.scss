@@ -1,0 +1,16 @@
+.alignments {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-inline: 1rem;
+  margin-block: 1rem;
+
+  .item {
+    cursor: pointer;
+    svg {
+      path {
+        fill: #646464;
+      }
+    }
+  }
+}

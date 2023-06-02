@@ -1,0 +1,11 @@
+.canvas-wrapper {
+  height: 100%;
+  flex: 2;
+  position: relative;
+  background-color: #f3ebef;
+  overflow-x: hidden;
+  .editor_canvas {
+    position: absolute;
+    width: fit-content;
+  }
+}

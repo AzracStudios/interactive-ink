@@ -17,5 +17,11 @@
     "tslib": "^2.5.0",
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
+  },
+  "dependencies": {
+    "cloudinary": "^1.37.0",
+    "sass": "^1.62.1",
+    "scss": "^0.2.4",
+    "svelte-spa-router": "^3.3.0"
   }
 }
