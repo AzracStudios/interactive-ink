@@ -1,20 +1,10 @@
+@import "../../../../styles/variables";
+
 .editor__elements {
   width: 90%;
   margin-inline: auto;
   overflow-y: auto;
   flex: 2;
-
-  .add_element {
-    width: 100%;
-    padding: 0.5rem 0.8rem;
-    font-size: 1.1rem;
-    background: transparent;
-    border: 2px solid #019aff;
-    border-radius: 0.5rem;
-    color: #019aff;
-    margin-bottom: 1rem;
-    cursor: pointer;
-  }
 
   .element {
     display: flex;
@@ -23,7 +13,7 @@
     cursor: pointer;
     padding: 0.2rem 0.5rem;
     border-radius: 0.2rem;
-    color: black;
+    color: $color-black;
 
     .left {
       display: flex;
@@ -43,12 +33,12 @@
     }
 
     &.element--selected {
-      color: white;
-      background: #019aff;
+      color: $color-white;
+      background: $color-primary;
       .right {
         svg {
           path {
-            fill: white;
+            fill: $color-white;
           }
         }
       }

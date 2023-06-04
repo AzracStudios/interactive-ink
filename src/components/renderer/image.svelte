@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { Mode, SelectedElement, ViewScaleFactor } from "../../globalStore";
+  import {
+    Mode,
+    MovingSelected,
+    SelectedElement,
+    ViewScaleFactor,
+  } from "../../globalStore";
   import type { ApplicationMode, Component, Image } from "../../types";
   import Interactable from "../shared/interactable.svelte";
 
@@ -34,12 +39,33 @@
     style={`
       width: ${component.transform.scale.fieldValue.x}px;
       height: ${component.transform.scale.fieldValue.y}px;
+      position: absolute;
+      left: ${component.transform.position.fieldValue.x}px;
+      top: ${component.transform.position.fieldValue.y}px;
       z-index: ${component.renderPriority};
-      transform: translateX(${component.transform.position.fieldValue.x}px) translateY(${component.transform.position.fieldValue.y}px) rotateZ(${component.transform.rotation.fieldValue}deg);
+      transform: rotateZ(${component.transform.rotation.fieldValue}deg);
       `}
   >
     <Interactable {mode} {selected}>
-      <img src={component.properties.src.fieldValue} alt={component.properties.alt.fieldValue} />
+      <img
+        src={component.properties.src.fieldValue}
+        alt={component.properties.alt.fieldValue}
+        style={`  
+          width: ${component.transform.scale.fieldValue.x}px;
+          height: ${component.transform.scale.fieldValue.y}px; 
+          user-select:none;
+          filter: brightness(${component.properties.brightness.fieldValue}%) contrast(${component.properties.contrast.fieldValue}%) saturate(${component.properties.saturation.fieldValue}%) hue-rotate(${component.properties.hue.fieldValue}deg) sepia(${component.properties.sepia.fieldValue}%);
+        `}
+        on:click={() => {
+          SelectedElement.set(component);
+        }}
+        on:mousedown={() => {
+          MovingSelected.set(true);
+        }}
+        on:dragstart={(e) => {
+          e.preventDefault();
+        }}
+      />
     </Interactable>
   </div>
 {/if}

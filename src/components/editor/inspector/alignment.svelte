@@ -5,7 +5,7 @@
   import "./alignment.scss";
   import { transition_in } from "svelte/internal";
 
-  let selected: Component;
+  let selected: Component<any>;
   $: selected;
 
   SelectedElement.subscribe((val) => {
@@ -43,10 +43,9 @@
     class="item"
     on:click={() => {
       selected.transform.position.fieldValue.x =
-        -22  +
         (get(ProjectConfiguration).dimensions.x -
           selected.transform.scale.fieldValue.x) /
-          2;
+        2;
       SelectedElement.set(selected);
     }}
   >

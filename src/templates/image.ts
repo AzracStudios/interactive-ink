@@ -23,14 +23,25 @@ export const ImageTemplate: Component<Image> = {
       fieldType: "Vector2",
       fieldName: "Scale",
       fieldValue: {
-        x: 0,
-        y: 0,
+        x: 500,
+        y: 500,
       },
     },
   },
   type: "image",
   name: "Image",
   loaded: true,
+  propertiesSortOrder: [
+    "src",
+    "alt",
+    "outlineColor",
+    "outlineWidth",
+    "brightness",
+    "contrast",
+    "saturation",
+    "hue",
+    "sepia",
+  ],
   properties: {
     src: {
       fieldType: "Image",
@@ -61,6 +72,7 @@ export const ImageTemplate: Component<Image> = {
       fieldOptions: [0, 150],
       fieldName: "Brightness",
       fieldValue: 100,
+      fieldDefault: 100,
     },
 
     contrast: {
@@ -68,12 +80,14 @@ export const ImageTemplate: Component<Image> = {
       fieldOptions: [0, 150],
       fieldName: "Contrast",
       fieldValue: 100,
+      fieldDefault: 100,
     },
 
     saturation: {
       fieldType: "Range",
       fieldOptions: [0, 150],
       fieldName: "Saturation",
+      fieldDefault: 100,
       fieldValue: 100,
     },
 
@@ -81,6 +95,7 @@ export const ImageTemplate: Component<Image> = {
       fieldType: "Range",
       fieldOptions: [0, 360],
       fieldName: "Hue",
+      fieldDefault: 0,
       fieldValue: 0,
     },
 
@@ -88,6 +103,7 @@ export const ImageTemplate: Component<Image> = {
       fieldType: "Range",
       fieldOptions: [0, 100],
       fieldName: "Sepia",
+      fieldDefault: 0,
       fieldValue: 0,
     },
   },

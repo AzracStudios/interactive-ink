@@ -1,0 +1,48 @@
+@import "../../../styles/variables";
+
+.select_image_modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 80vw;
+  height: 70vh;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background: $color-white;
+  box-shadow: $box-shadow;
+  border-radius: 1rem;
+  z-index: 99;
+
+  .head {
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: fit-content;
+    padding: 0.5rem;
+    margin-inline: auto;
+    color: $color-black;
+  }
+
+  .elements {
+    flex-wrap: wrap;
+    padding: 2rem;
+    gap: 2rem;
+    
+
+    img {
+      cursor: pointer;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      width: fit-content;
+      height: fit-content;
+
+      transition: opacity 0.2s ease;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+}

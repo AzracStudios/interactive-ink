@@ -21,14 +21,24 @@ export const TextTemplate = {
       fieldType: "Vector2",
       fieldName: "Scale",
       fieldValue: {
-        x: 0,
-        y: 0,
+        x: 215,
+        y: 145,
       },
     },
   },
   type: "text",
   name: "Text",
   loaded: true,
+  propertiesSortOrder: [
+    "text",
+    "fontFamily",
+    "fontSize",
+    "lineHeight",
+    "alignment",
+    "color",
+    "bold",
+    "underline",
+  ],
   properties: {
     text: {
       fieldType: "TextArea",
@@ -36,13 +46,13 @@ export const TextTemplate = {
       fieldValue: "Text",
     },
     fontFamily: {
-      fieldType: "String",
+      fieldType: "FontEnum",
       fieldName: "Font",
-      fieldValue: "Inter",
+      fieldValue: "Poppins",
     },
-   
+
     fontSize: { fieldType: "Number", fieldName: "Size", fieldValue: 100 },
-    
+
     lineHeight: {
       fieldType: "Number",
       fieldName: "Line Height",
@@ -62,11 +72,6 @@ export const TextTemplate = {
       fieldValue: "#000000",
     },
     bold: { fieldType: "Boolean", fieldName: "Bold", fieldValue: false },
-    autoWidth: {
-      fieldType: "Boolean",
-      fieldName: "Auto Width",
-      fieldValue: true,
-    },
     underline: {
       fieldType: "Boolean",
       fieldName: "Underline",

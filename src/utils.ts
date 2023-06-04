@@ -18,3 +18,15 @@ export function camelToSentence(camelText: string): string {
 export function invertHex(hex: any) {
   return (Number(`0x1${hex}`) ^ 0xffffff).toString(16).substr(1).toUpperCase();
 }
+
+export function generateFontString(fonts: string[]) {
+  let res = "";
+
+  for (let i = 0; i < fonts.length; i++) {
+    const font = fonts[i];
+    res += font.replaceAll(" ", "+");
+    res += i < fonts.length - 1 ? "|" : "";
+  }
+
+  return res;
+}

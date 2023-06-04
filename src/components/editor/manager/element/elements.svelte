@@ -7,10 +7,10 @@
   import { AddElementModal } from "../store";
   import { get } from "svelte/store";
 
-  let elements: Component[];
+  let elements: Component<any>[];
   $: elements;
 
-  let selected: Component;
+  let selected: Component<any>;
   $: selected;
 
   CurrentPage.subscribe((val) => {
@@ -33,7 +33,7 @@
 
 <div class="editor__elements">
   <button
-    class="add_element"
+    class="add_element action_button"
     on:click={() => {
       AddElementModal.set(true);
     }}
@@ -76,6 +76,7 @@
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             on:click={() => {
+              SelectedElement.set(null);
               let temp = get(CurrentPage);
               delete temp.components[id];
               CurrentPage.set(temp);

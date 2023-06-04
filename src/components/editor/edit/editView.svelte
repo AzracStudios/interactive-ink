@@ -11,16 +11,16 @@
   import { getHeight, sleep } from "../../../utils";
   import {
     CurrentPage,
+    Fonts,
     Mode,
     MovingSelected,
     ProjectConfiguration,
-    ScalingSelected,
+    ScalingSelectedX,
+    ScalingSelectedY,
     SelectedElement,
     ViewScaleFactor,
   } from "../../../globalStore";
   import { get } from "svelte/store";
-  import { page, projconf } from "../temp";
-  import { select_multiple_value } from "svelte/internal";
 
   let canvas: HTMLDivElement;
 
@@ -50,13 +50,10 @@
   let currentPage: Page;
   $: currentPage;
 
-  ProjectConfiguration.set(projconf);
-
   ProjectConfiguration.subscribe((val) => {
     config = val;
+    if (get(Fonts) != val.fonts) Fonts.set(val.fonts);
   });
-
-  CurrentPage.set(page);
 
   CurrentPage.subscribe((val) => {
     currentPage = val;
@@ -100,8 +97,11 @@
   let movingSelected: boolean = false;
   $: movingSelected;
 
-  let scalingSelected: Direction | null = null;
-  $: scalingSelected;
+  let scalingSelectedX: Direction | null = null;
+  $: scalingSelectedX;
+
+  let scalingSelectedY: Direction | null = null;
+  $: scalingSelectedY;
 
   let previousMousePosition: Vector2 = { x: 0, y: 0 };
 
@@ -109,13 +109,24 @@
     movingSelected = val;
   });
 
-  ScalingSelected.subscribe((val) => {
-    scalingSelected = val;
+  ScalingSelectedX.subscribe((val) => {
+    scalingSelectedX = val;
   });
+
+  ScalingSelectedY.subscribe((val) => {
+    scalingSelectedY = val;
+  });
+
+  onmousedown = (e: MouseEvent) => {
+    if ((e.target as HTMLElement).classList.contains("page")) {
+      SelectedElement.set(null);
+    }
+  };
 
   onmouseup = () => {
     MovingSelected.set(null);
-    ScalingSelected.set(null);
+    ScalingSelectedX.set(null);
+    ScalingSelectedY.set(null);
   };
 
   const handleMouse = (e: MouseEvent) => {
@@ -124,42 +135,40 @@
 
     if (movingSelected) {
       if (!e.shiftKey) {
-        selected.transform.position.fieldValue.x =
-          (e.clientX - padding.x - canvas.getBoundingClientRect().left) *
-            inverseScaleFactor +
-          50;
+        selected.transform.position.fieldValue.x +=
+          (e.clientX - previousMousePosition.x) * inverseScaleFactor;
       }
 
       if (!e.ctrlKey) {
-        selected.transform.position.fieldValue.y =
-          (e.clientY - padding.y) * inverseScaleFactor - canvasPosition.y - 25;
+        selected.transform.position.fieldValue.y +=
+          (e.clientY - previousMousePosition.y) * inverseScaleFactor;
       }
     }
 
     (() => {
-      if (selected.type == "text" && selected.properties.autoWidth.fieldValue) return;
-      if (scalingSelected == Direction.left) {
+      if (scalingSelectedX == Direction.left) {
         let delta = previousMousePosition.x - e.clientX;
         selected.transform.scale.fieldValue.x += delta * inverseScaleFactor;
         selected.transform.position.fieldValue.x -= delta * inverseScaleFactor;
       }
 
-      if (scalingSelected == Direction.right) {
+      if (scalingSelectedX == Direction.right) {
         let delta = e.clientX - previousMousePosition.x;
         selected.transform.scale.fieldValue.x += delta * inverseScaleFactor;
       }
 
-      if (scalingSelected == Direction.top) {
+      if (scalingSelectedY == Direction.top) {
         let delta = previousMousePosition.y - e.clientY;
         selected.transform.scale.fieldValue.y += delta * inverseScaleFactor;
         selected.transform.position.fieldValue.y -= delta * inverseScaleFactor;
       }
 
-      if (scalingSelected == Direction.bottom) {
+      if (scalingSelectedY == Direction.bottom) {
         let delta = e.clientY - previousMousePosition.y;
         selected.transform.scale.fieldValue.y += delta * inverseScaleFactor;
       }
     })();
+
     previousMousePosition = { x: e.clientX, y: e.clientY };
     SelectedElement.set(selected);
   };

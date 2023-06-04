@@ -1,0 +1,102 @@
+@import "../../../../styles/variables";
+
+.editor__assets {
+  width: 90%;
+  margin-inline: auto;
+  overflow-y: auto;
+  flex: 2;
+  padding-inline: 1rem;
+  .font_preview {
+    margin-left: 0.5rem;
+  }
+}
+
+.size-text {
+  width: fit-content;
+  margin-inline: auto;
+  color: $color-primary;
+  margin-block: 0.4rem;
+}
+
+.image_prev {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.33;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  
+  img {
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    margin-block: 0.5rem;
+    object-fit: cover;
+    height: 100%;
+    width: 90%;
+  }
+}
+
+.wrapper {
+  margin-block: 2rem;
+  margin-inline: auto;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.btn_wrapper {
+  width: fit-content;
+  margin-block: 1rem;
+  margin-inline: auto;
+
+  input {
+    padding-inline: 2rem;
+  }
+}
+.hr-l {
+  margin-block: 2rem;
+}
+
+.select_file {
+  min-width: 30%;
+  width: fit-content;
+  gap: 1rem;
+  background: $color-primary;
+  color: white;
+  padding: 1rem;
+  border-radius: $border-radius;
+  margin-inline: auto;
+  cursor: pointer;
+  p {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}
+
+.fonts_tab {
+  width: 50%;
+  margin-inline: auto;
+  .field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    input,
+    button {
+      padding: 0.4rem;
+      outline: none;
+      border: none;
+      background: #e8e8e8;
+      color: rgb(86, 86, 86);
+      border-radius: 0.2rem;
+      font-family: inherit;
+    }
+
+    input {
+      flex: 2;
+    }
+  }
+}

@@ -9,8 +9,13 @@ import type {
 
 export const Mode = writable<ApplicationMode>();
 export const CurrentPage = writable<Page>();
-export const SelectedElement = writable<Component>();
+export const SelectedElement = writable<Component<any>>();
 export const MovingSelected = writable<boolean>();
-export const ScalingSelected = writable<Direction | null>();
+export const ScalingSelectedX = writable<Direction | null>();
+export const ScalingSelectedY = writable<Direction | null>();
 export const ProjectConfiguration = writable<ProjectConfig>();
+export const ProjectData = writable<Page[]>();
 export const ViewScaleFactor = writable<number>();
+export const Fonts = writable<string[]>(["Poppins"]);
+export const Images = writable<{ id: string; src: string }[]>();
+export const ProjectId = writable<string>();

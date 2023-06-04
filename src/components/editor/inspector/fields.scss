@@ -1,3 +1,5 @@
+@import "../../../styles/variables";
+
 .dynamic_field {
   display: flex;
   align-items: center;
@@ -25,6 +27,7 @@
       color: rgb(86, 86, 86);
       border-radius: 0.2rem;
       font-family: inherit;
+      box-shadow: $box-shadow;
     }
 
     textarea {

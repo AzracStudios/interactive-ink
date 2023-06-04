@@ -10,11 +10,18 @@ export interface Time {
   seconds: number;
 }
 
+export interface Project {
+  config: ProjectConfig;
+  data: Page[];
+}
+
 export interface ProjectConfig {
+  id: string;
   name: string;
   author: string;
   aspectRatio: number;
   scaleBehaviour: "width" | "height";
+  fonts: string[];
   dimensions: Vector2;
   created: DateTime;
   lastModified: DateTime | undefined;
@@ -35,6 +42,7 @@ export interface Field<T> {
   fieldType: string;
   fieldName: string;
   fieldValue: T;
+  fieldDefault?: T;
   fieldOptions?: any[];
 }
 
@@ -46,6 +54,7 @@ export interface Component<T> {
   animation?: Animation;
   loaded: boolean;
   renderPriority: number;
+  propertiesSortOrder: string[];
   properties?: T;
 }
 
@@ -95,7 +104,6 @@ export interface Text {
   lineHeight: Field<number>;
   bold?: Field<boolean>;
   underline?: Field<boolean>;
-  autoWidth?: Field<boolean>;
   alignment: Field<string[]>;
 }
 

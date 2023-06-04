@@ -1,3 +1,5 @@
+@import "../../../styles/variables";
+
 .alignments {
   display: flex;
   align-items: center;
@@ -9,7 +11,7 @@
     cursor: pointer;
     svg {
       path {
-        fill: #646464;
+        fill: $color-black-500;
       }
     }
   }
