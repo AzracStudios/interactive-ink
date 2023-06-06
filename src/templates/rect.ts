@@ -35,6 +35,18 @@ export const RectTemplate: Component<Rect> = {
   },
   type: "rect",
   name: "Rect",
+  animation: {
+    from: { fieldType: "Component", fieldName: "From", fieldValue: null },
+    to: { fieldType: "Component", fieldName: "To", fieldValue: null },
+    delay: { fieldType: "Number", fieldName: "Delay", fieldValue: 0 },
+    duration: { fieldType: "Number", fieldName: "Duration", fieldValue: 0 },
+    timingFunction: {
+      fieldType: "Enum",
+      fieldName: "Timing Function",
+      fieldValue: "ease",
+      fieldOptions: ["ease", "ease-in", "ease-out", "ease-in-out", "linear"],
+    },
+  },
   loaded: true,
   effects: {
     shadow: {
@@ -88,10 +100,7 @@ export const RectTemplate: Component<Rect> = {
       },
     },
   },
-  propertiesSortOrder: [
-    "color",
-    "borderRadius"
-  ],
+  propertiesSortOrder: ["color", "borderRadius", "opacity"],
   properties: {
     color: {
       fieldType: "Color",
@@ -99,9 +108,15 @@ export const RectTemplate: Component<Rect> = {
       fieldValue: "#000000",
     },
     borderRadius: {
-        fieldType: "Number",
-        fieldName: "Border Radius",
-        fieldValue: 0
-    }
+      fieldType: "Number",
+      fieldName: "Border Radius",
+      fieldValue: 0,
+    },
+    opacity: {
+      fieldType: "Number",
+      fieldName: "Opacity",
+      fieldValue: 100,
+      fieldOptions: [0, 100]
+    },
   },
 };

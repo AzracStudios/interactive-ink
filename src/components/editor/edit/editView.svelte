@@ -16,6 +16,7 @@
     HistoryIndex,
     Mode,
     MovingSelected,
+    PageIndex,
     ProjectConfiguration,
     ScalingSelectedX,
     ScalingSelectedY,
@@ -124,7 +125,9 @@
     if (get(SelectedElement) && get(FileHistory).length == 0) {
       let currentHistory = get(FileHistory);
       let newestEntry = structuredClone(get(SelectedElement));
+      if (currentHistory.length == 50) currentHistory.shift();
       currentHistory.push(newestEntry);
+
       FileHistory.set(currentHistory);
     }
     if ((e.target as HTMLElement).classList.contains("page")) {
@@ -142,10 +145,11 @@
         let newestEntry = structuredClone(get(SelectedElement));
         if (get(HistoryIndex) > 0)
           currentHistory = currentHistory.slice(0, get(HistoryIndex) + 1);
+        if (currentHistory.length == 50) currentHistory.shift();
         currentHistory.push(newestEntry);
+
         FileHistory.set(currentHistory);
         HistoryIndex.set(currentHistory.length - 1);
-        console.log(currentHistory);
       }
     })();
 
@@ -226,6 +230,6 @@
         `}
     bind:this={canvas}
   >
-    <PageRenderer page={currentPage} />
+    <PageRenderer page={currentPage} index={get(PageIndex)}/>
   </div>
 </div>

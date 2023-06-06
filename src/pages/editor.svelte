@@ -31,7 +31,7 @@
     Images.set(await fetchImages(params.id));
     ProjectConfiguration.set(project.config);
     ProjectData.set(project.data);
-    CurrentPage.set(project.data[0]);
+    CurrentPage.set(project.data[project.config.pageOrder[0]]);
     loaderOut = true;
     await sleep(500);
     loaded = true;

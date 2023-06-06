@@ -1,14 +1,40 @@
 @import "../styles/variables";
 
 .canvas-wrapper-viewer {
-    height: 100vh;
-    flex: 2;
-    position: relative;
-    background-color: #f3ebef;
+  height: 100vh;
+  flex: 2;
+  position: relative;
+  background-color: #f3ebef;
+  overflow-x: hidden;
+  .viewer_canvas {
+    position: absolute;
+    width: fit-content;
     overflow-x: hidden;
-    .viewer_canvas {
+
+    .page {
       position: absolute;
-      width: fit-content;
+      transition: all 0.3s ease-out;
     }
   }
-  
+}
+
+.controls {
+  position: absolute;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  gap: 0;
+
+  button {
+    opacity: 0;
+    height: 100%;
+    width: 50%;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+
+  }
+}

@@ -1,9 +1,13 @@
 <script lang="ts">
   import { get } from "svelte/store";
-  import { ProjectConfiguration, SelectedElement } from "../../../globalStore";
+  import {
+    FileHistory,
+    HistoryIndex,
+    ProjectConfiguration,
+    SelectedElement,
+  } from "../../../globalStore";
   import type { Component } from "../../../types";
   import "./alignment.scss";
-  import { transition_in } from "svelte/internal";
 
   let selected: Component<any>;
   $: selected;
@@ -11,6 +15,18 @@
   SelectedElement.subscribe((val) => {
     selected = val;
   });
+
+  const writeFrame = () => {
+    if (!get(SelectedElement)) return;
+    let currentHistory = get(FileHistory);
+    let newestEntry = structuredClone(get(SelectedElement));
+    if (get(HistoryIndex) > 0)
+      currentHistory = currentHistory.slice(0, get(HistoryIndex) + 1);
+    if (currentHistory.length == 50) currentHistory.shift();
+    currentHistory.push(newestEntry);
+    FileHistory.set(currentHistory);
+    HistoryIndex.set(currentHistory.length - 1);
+  };
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -21,6 +37,7 @@
     on:click={() => {
       selected.transform.position.fieldValue.x = 0;
       SelectedElement.set(selected);
+      writeFrame();
     }}
   >
     <svg
@@ -47,6 +64,7 @@
           selected.transform.scale.fieldValue.x) /
         2;
       SelectedElement.set(selected);
+      writeFrame();
     }}
   >
     <svg
@@ -72,6 +90,7 @@
         get(ProjectConfiguration).dimensions.x -
         selected.transform.scale.fieldValue.x;
       SelectedElement.set(selected);
+      writeFrame();
     }}
   >
     <svg
@@ -95,6 +114,7 @@
     on:click={() => {
       selected.transform.position.fieldValue.y = 0;
       SelectedElement.set(selected);
+      writeFrame();
     }}
   >
     <svg
@@ -121,6 +141,7 @@
           selected.transform.scale.fieldValue.y) /
         2;
       SelectedElement.set(selected);
+      writeFrame();
     }}
   >
     <svg
@@ -146,6 +167,7 @@
         get(ProjectConfiguration).dimensions.y -
         selected.transform.scale.fieldValue.y;
       SelectedElement.set(selected);
+      writeFrame();
     }}
   >
     <svg

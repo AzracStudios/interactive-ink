@@ -22,8 +22,8 @@ export const ImageTemplate: Component<Image> = {
       fieldType: "Vector2",
       fieldName: "Scale",
       fieldValue: {
-        x: 500,
-        y: 500,
+        x: 800,
+        y: 540,
       },
     },
 
@@ -92,12 +92,26 @@ export const ImageTemplate: Component<Image> = {
     "src",
     "alt",
     "borderRadius",
+    "opacity",
     "brightness",
     "contrast",
     "saturation",
     "hue",
     "sepia",
   ],
+  animation: {
+    from: { fieldType: "Component", fieldName: "From", fieldValue: null },
+    to: { fieldType: "Component", fieldName: "To", fieldValue: null },
+    delay: { fieldType: "Number", fieldName: "Delay", fieldValue: 0 },
+    duration: { fieldType: "Number", fieldName: "Duration", fieldValue: 0 },
+    timingFunction: {
+      fieldType: "Enum",
+      fieldName: "Timing Function",
+      fieldValue: "ease",
+      fieldOptions: ["ease", "ease-in", "ease-out", "ease-in-out", "linear"],
+    },
+  },
+
   properties: {
     src: {
       fieldType: "Image",
@@ -114,6 +128,12 @@ export const ImageTemplate: Component<Image> = {
       fieldType: "Number",
       fieldName: "Border Radius",
       fieldValue: 0,
+    },
+    opacity: {
+      fieldType: "Number",
+      fieldName: "Opacity",
+      fieldValue: 100,
+      fieldOptions: [0, 100]
     },
     brightness: {
       fieldType: "Range",

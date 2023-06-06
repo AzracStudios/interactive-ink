@@ -10,6 +10,7 @@ import { FileHistoryNode } from "./utils";
 
 export const Mode = writable<ApplicationMode>();
 export const CurrentPage = writable<Page>();
+export const PageIndex = writable<number>(0);
 export const FileHistory = writable<Component<any>[]>([]);
 export const HistoryIndex = writable<number>(0);
 export const Clipboard = writable<Component<any>>();

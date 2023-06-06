@@ -1,6 +1,12 @@
 <script lang="ts">
   import { get } from "svelte/store";
-  import { CurrentPage, Fonts, SelectedElement } from "../../../globalStore";
+  import {
+    CurrentPage,
+    FileHistory,
+    Fonts,
+    HistoryIndex,
+    SelectedElement,
+  } from "../../../globalStore";
   import "./fields.scss";
   import type { Field } from "../../../types";
   import SelectImage from "./selectImage.svelte";
@@ -28,6 +34,18 @@
     SelectedElement.set(temp);
   };
 
+  const writeFrame = () => {
+    if (!get(SelectedElement)) return;
+    let currentHistory = get(FileHistory);
+    let newestEntry = structuredClone(get(SelectedElement));
+    if (get(HistoryIndex) > 0)
+      currentHistory = currentHistory.slice(0, get(HistoryIndex) + 1);
+    if (currentHistory.length == 50) currentHistory.shift();
+    currentHistory.push(newestEntry);
+    FileHistory.set(currentHistory);
+    HistoryIndex.set(currentHistory.length - 1);
+  };
+
   export let fonts = [];
   let selectImage = false;
   $: selectImage;
@@ -43,16 +61,24 @@
           type="text"
           bind:value={property.fieldValue}
           on:input={handleWrite}
+          on:blur={writeFrame}
         />
       {/if}
       {#if property.fieldType == "TextArea"}
-        <textarea bind:value={property.fieldValue} on:input={handleWrite} />
+        <textarea
+          bind:value={property.fieldValue}
+          on:input={handleWrite}
+          on:blur={writeFrame}
+        />
       {/if}
       {#if property.fieldType == "Enum"}
         <select
           name={property.fieldName}
           bind:value={property.fieldValue}
-          on:change={handleWrite}
+          on:change={() => {
+            handleWrite();
+            writeFrame();
+          }}
         >
           {#each property.fieldOptions as opt}
             <option value={opt}>{opt}</option>
@@ -63,7 +89,10 @@
         <select
           name={property.fieldName}
           bind:value={property.fieldValue}
-          on:change={handleWrite}
+          on:change={() => {
+            handleWrite();
+            writeFrame();
+          }}
         >
           {#each fonts as opt, _}
             <option value={opt}>{opt}</option>
@@ -75,6 +104,9 @@
           type="number"
           bind:value={property.fieldValue}
           on:input={handleWrite}
+          on:blur={writeFrame}
+          min={property.fieldOptions ? property.fieldOptions[0] : -Infinity}
+          max={property.fieldOptions ? property.fieldOptions[1] : Infinity}
         />
       {/if}
       {#if property.fieldType == "Range"}
@@ -86,6 +118,7 @@
           min={property.fieldOptions[0]}
           max={property.fieldOptions[1]}
           style="width: 85%"
+          on:blur={writeFrame}
         />
 
         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -115,6 +148,7 @@
           type="color"
           bind:value={property.fieldValue}
           on:input={handleWrite}
+          on:blur={writeFrame}
         />
       {/if}
       {#if property.fieldType == "Image"}
@@ -128,6 +162,67 @@
         </div>
       {/if}
 
+      {#if property.fieldType == "Component"}
+        <div style="width: 100%%;">
+          {#if property.fieldName == "From"}
+            <button
+              class="action_button"
+              on:click={() => {
+                let selected = get(SelectedElement);
+                let from = { properties: {}, transform: {}, effects: {} };
+                from.properties = structuredClone(selected.properties);
+                from.transform = structuredClone(selected.transform);
+                from.effects = structuredClone(selected.effects);
+
+                // EXCL PROP
+                delete from.properties["text"];
+                delete from.properties["src"];
+
+                selected.animation.from.fieldValue = from;
+
+                if (selected.animation.to.fieldValue != null) {
+                  for (let prop in selected.animation.to.fieldValue
+                    .properties) {
+                    selected.properties[prop] =
+                      selected.animation.to.fieldValue.properties[prop];
+                  }
+
+                  for (let prop in selected.animation.to.fieldValue.transform) {
+                    selected.transform[prop] =
+                      selected.animation.to.fieldValue.transform[prop];
+                  }
+
+                  for (let prop in selected.animation.to.fieldValue.effects) {
+                    selected.effects[prop] =
+                      selected.animation.to.fieldValue.effects[prop];
+                  }
+                }
+
+                SelectedElement.set(selected);
+              }}>Take Snapshot</button
+            >
+          {:else}
+            <button
+              class="action_button"
+              on:click={() => {
+                let selected = get(SelectedElement);
+                let to = { properties: {}, transform: {}, effects: {} };
+                to.properties = structuredClone(selected.properties);
+                to.transform = structuredClone(selected.transform);
+                to.effects = structuredClone(selected.effects);
+
+                // EXCL PROP
+                delete to.properties["text"];
+                delete to.properties["src"];
+
+                selected.animation.to.fieldValue = to;
+                SelectedElement.set(selected);
+              }}>Take Snapshot</button
+            >
+          {/if}
+        </div>
+      {/if}
+
       {#if property.fieldType == "Boolean"}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div class="tabs">
@@ -136,6 +231,7 @@
             on:click={() => {
               property.fieldValue = true;
               handleWrite();
+              writeFrame();
             }}
           >
             <p>Yes</p>
@@ -145,6 +241,7 @@
             on:click={() => {
               property.fieldValue = false;
               handleWrite();
+              writeFrame();
             }}
           >
             <p>No</p>
@@ -156,11 +253,13 @@
           type="number"
           bind:value={property.fieldValue.x}
           on:input={handleWrite}
+          on:blur={writeFrame}
         />
         <input
           type="number"
           bind:value={property.fieldValue.y}
           on:input={handleWrite}
+          on:blur={writeFrame}
         />
       {/if}
     </div>

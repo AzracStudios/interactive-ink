@@ -1,8 +1,9 @@
 <script lang="ts">
+  import Page from "./pages/page.svelte";
   import Assets from "./assets/assets.svelte";
   import Elements from "./element/elements.svelte";
   import "./managerPanel.scss";
-  let currentTab: string = "Elements";
+  let currentTab: string = "Pages";
   $: currentTab;
 
   let tabs = ["Pages", "Elements", "Assets"];
@@ -31,5 +32,9 @@
 
   {#if currentTab == "Assets"}
     <Assets />
+  {/if}
+
+  {#if currentTab == "Pages"}
+    <Page />
   {/if}
 </div>

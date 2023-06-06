@@ -25,6 +25,7 @@ export interface ProjectConfig {
   dimensions: Vector2;
   created: DateTime;
   lastModified: DateTime | undefined;
+  pageOrder: string[];
 }
 
 export interface Vector2 {
@@ -59,10 +60,9 @@ export interface Component<T> {
   properties: T;
 }
 
-export interface Animation<T> {
-  property: Field<string>;
-  from: Field<T>;
-  to: Field<T>;
+export interface Animation {
+  from: Field<Component>;
+  to: Field<Component>;
   delay: Field<number>;
   duration: Field<number>;
   timingFunction: Field<string>;
@@ -87,6 +87,7 @@ export interface Outline {
 
 export interface Page {
   id: string;
+  name: Field<string>;
   components: any;
   background: Field<string>;
   index: number;
@@ -109,11 +110,14 @@ export interface Image {
   saturation: Field<number>;
   hue: Field<number>;
   sepia: Field<number>;
+  opacity: Field<number>;
+
 }
 
 export interface Rect {
   color: Field<string>;
   borderRadius: Field<number>;
+  opacity: Field<number>;
 }
 
 export interface Text {
@@ -125,6 +129,7 @@ export interface Text {
   bold?: Field<boolean>;
   underline?: Field<boolean>;
   alignment: Field<string>;
+  opacity: Field<number>;
 }
 
 export type ApplicationMode = "view" | "edit";

@@ -16,6 +16,7 @@
     Fonts,
     Images,
     Mode,
+    PageIndex,
     ProjectConfiguration,
     ProjectData,
     ProjectId,
@@ -50,15 +51,32 @@
   let currentPage: Page;
   $: currentPage;
 
+  let pages: any;
+  $: pages;
+
+  let pageIndex: number;
+  $: pageIndex;
+
   ProjectConfiguration.subscribe((val) => {
     if (!val) return;
     config = val;
+
     if (get(Fonts) != val.fonts) Fonts.set(val.fonts);
+  });
+
+  ProjectData.subscribe((val) => {
+    if (!val) return;
+    pages = val;
   });
 
   CurrentPage.subscribe((val) => {
     currentPage = val;
   });
+
+  PageIndex.subscribe((val) => {
+    pageIndex = val;
+  });
+
   export let params;
 
   function recalculate() {
@@ -67,9 +85,9 @@
     clientDimensions.y = getHeight();
 
     canvasScaleFactor =
-      config.scaleBehaviour == "height"
+      getHeight() < getWidth()
         ? clientDimensions.y / config.dimensions.y
-        : clientDimensions.x / config.dimensions.y;
+        : clientDimensions.x / config.dimensions.x;
 
     ViewScaleFactor.set(canvasScaleFactor);
 
@@ -81,7 +99,7 @@
 
       canvasPosition.x = (clientDimensions.x - canvasDimensions.x) / 2;
       canvasPosition.y = (clientDimensions.y - canvasDimensions.y) / 2;
-    });
+    }); 
   }
 
   let loaded = false;
@@ -119,6 +137,29 @@
 </svelte:head>
 
 {#if loaded}
+  <div
+    class="controls"
+    style="width:{config.dimensions.x *
+      (canvasScaleFactor - 0.01)}px; height:{config.dimensions.y *
+      (canvasScaleFactor - 0.01)}px"
+  >
+    <button
+      class="left"
+      on:click={() => {
+        if (pageIndex - 1 < 0) return;
+        pageIndex--;
+        PageIndex.set(pageIndex);
+      }}
+    />
+    <button
+      class="right"
+      on:click={() => {
+        if (pageIndex > config.pageOrder.length - 2) return;
+        pageIndex++;
+        PageIndex.set(pageIndex);
+      }}
+    />
+  </div>
   <div class="canvas-wrapper-viewer">
     <div
       class="viewer_canvas"
@@ -131,7 +172,9 @@
         `}
       bind:this={canvas}
     >
-      <PageRenderer page={currentPage} />
+      {#each config.pageOrder as page, _}
+        <PageRenderer page={pages[page]} loaded={_ == pageIndex} index={_} />
+      {/each}
     </div>
   </div>
 {/if}

@@ -26,14 +26,12 @@ export const TextTemplate: Component<Text> = {
         y: 145,
       },
     },
-    
 
     zIndex: {
       fieldType: "Number",
       fieldName: "Render Priority",
       fieldValue: 0,
     },
-
   },
   type: "text",
   name: "Text",
@@ -43,17 +41,17 @@ export const TextTemplate: Component<Text> = {
       offset: {
         fieldName: "Offset",
         fieldType: "Vector2",
-        fieldValue: {x: 0, y: 0},
+        fieldValue: { x: 0, y: 0 },
       },
       blur: {
         fieldName: "Blur",
         fieldType: "Number",
-        fieldValue: 0
+        fieldValue: 0,
       },
       color: {
         fieldName: "Color",
         fieldType: "Color",
-        fieldValue: "#000000"
+        fieldValue: "#000000",
       },
       opacity: {
         fieldName: "Opacity",
@@ -67,7 +65,7 @@ export const TextTemplate: Component<Text> = {
       blur: {
         fieldName: "Blur",
         fieldType: "Number",
-        fieldValue: 0
+        fieldValue: 0,
       },
     },
 
@@ -75,26 +73,39 @@ export const TextTemplate: Component<Text> = {
       width: {
         fieldName: "Width",
         fieldType: "Number",
-        fieldValue: 0
+        fieldValue: 0,
       },
       strokeStyle: {
         fieldName: "Stroke Style",
         fieldType: "Enum",
         fieldValue: "solid",
-        fieldOptions: ["solid", "dashed"]
+        fieldOptions: ["solid", "dashed"],
       },
       color: {
         fieldName: "Color",
         fieldType: "Color",
-        fieldValue: "#000000"
-      }
-    }
+        fieldValue: "#000000",
+      },
+    },
+  },
+  animation: {
+    from: { fieldType: "Component", fieldName: "From", fieldValue: null },
+    to: { fieldType: "Component", fieldName: "To", fieldValue: null },
+    delay: { fieldType: "Number", fieldName: "Delay", fieldValue: 0 },
+    duration: { fieldType: "Number", fieldName: "Duration", fieldValue: 0 },
+    timingFunction: {
+      fieldType: "Enum",
+      fieldName: "Timing Function",
+      fieldValue: "ease",
+      fieldOptions: ["ease", "ease-in", "ease-out", "ease-in-out", "linear"],
+    },
   },
   propertiesSortOrder: [
     "text",
     "fontFamily",
     "fontSize",
     "lineHeight",
+    "opacity",
     "alignment",
     "color",
     "bold",
@@ -119,7 +130,12 @@ export const TextTemplate: Component<Text> = {
       fieldName: "Line Height",
       fieldValue: 0,
     },
-
+    opacity: {
+      fieldType: "Number",
+      fieldName: "Opacity",
+      fieldValue: 100,
+      fieldOptions: [0, 100],
+    },
     alignment: {
       fieldType: "Enum",
       fieldName: "Align",

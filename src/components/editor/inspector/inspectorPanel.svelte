@@ -82,11 +82,57 @@
       {/each}
     </div>
 
+    <div class="hr" />
+
+    <div class="head">Animation</div>
+
+    <div class="fields">
+      <FieldBuilder
+        fieldKey="from"
+        property={selected.animation.from}
+        writeTo="animation"
+      />
+      <FieldBuilder
+        fieldKey="to"
+        property={selected.animation.to}
+        writeTo="animation"
+      />
+      <FieldBuilder
+        fieldKey="delay"
+        property={selected.animation.delay}
+        writeTo="animation"
+      />
+      <FieldBuilder
+        fieldKey="duration"
+        property={selected.animation.duration}
+        writeTo="animation"
+      />
+      <FieldBuilder
+        fieldKey="timingFunction"
+        property={selected.animation.timingFunction}
+        writeTo="animation"
+      />
+      <div class="wrapper" style="width: 80%">
+        <button
+          class="action_button"
+          on:click={() => {
+            selected.animation.from = null;
+            selected.animation.to = null;
+          }}>Clear Animation</button
+        >
+      </div>
+    </div>
+
     <div class="space" />
   {:else}
     <p class="head">Page Settings</p>
 
     <div class="fields">
+      <FieldBuilder
+        fieldKey="name"
+        property={currentPage.name}
+        writeTo="page"
+      />
       <FieldBuilder
         fieldKey="background"
         property={currentPage.background}

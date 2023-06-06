@@ -1,0 +1,73 @@
+@import "../../../../styles/variables";
+
+.editor__pages {
+  width: 90%;
+  margin-inline: auto;
+}
+
+.page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.2rem;
+  user-select: none;
+
+
+  &.selected {
+    background: $color-primary;
+    .left {
+      color: $color-white;
+
+      .handle {
+        div {
+          svg {
+            path {
+              fill: $color-white;
+            }
+          }
+        }
+      }
+    }
+
+    .right {
+      svg {
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
+
+  .left {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    color: $color-black;
+    .handle {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      div {
+        width: 0.5rem;
+        svg {
+          height: 0.5rem;
+          width: 100%;
+          path {
+            fill: $color-black;
+          }
+        }
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+    svg {
+      width: 75%;
+    }
+  }
+}

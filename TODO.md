@@ -3,5 +3,6 @@ Todo
 - [x] Load Animation
 - [x] Landing Page
 - [x] Save Screen
-- [ ] Animations
+- [x] Animations
+- [ ] Undo Redo
 - [ ] Viewer

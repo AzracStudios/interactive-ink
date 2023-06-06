@@ -11,17 +11,18 @@
   } from "../../../globalStore";
   import { saveProject } from "../../../lib/pocketbase";
   import "./topbar.scss";
-  import type { ProjectConfig } from "../../../types";
-
+  import type { ProjectConfig, Page } from "../../../types";
   let conf: ProjectConfig;
   $: conf;
 
   let saving: boolean;
   $: saving;
 
-  ProjectConfiguration.subscribe((val) => {
-    conf = val;
-  });
+  let currentPage: Page;
+  $: currentPage;
+
+  ProjectConfiguration.subscribe((val) => (conf = val));
+  CurrentPage.subscribe((val) => (currentPage = val));
 
   let menu = [
     {
@@ -44,13 +45,7 @@
         {
           title: "Preview",
           do: () => {
-            window.open(`/#/view/${conf.id}?preview=true`);
-          },
-        },
-        {
-          title: "Publish",
-          do: () => {
-            alert("Publish Modal Placeholder");
+            window.open(`/#/view/${conf.id}`);
           },
         },
       ],
@@ -91,7 +86,6 @@
             let selected = get(SelectedElement);
             if (!selected) return;
             Clipboard.set(structuredClone(selected));
-            console.log(get(Clipboard))
           },
         },
         {
@@ -104,7 +98,7 @@
             element.id = id;
             currentPage.components[id] = element;
             element.transform.position.fieldValue.x += 30;
-            element.transform.position.fieldValue.y += 30; 
+            element.transform.position.fieldValue.y += 30;
             CurrentPage.set(currentPage);
             SelectedElement.set(get(CurrentPage).components[element.id]);
           },
@@ -156,7 +150,7 @@
   </div>
 
   <div class="center">
-    <p class="text_bold">{conf.name}</p>
+    <p class="text_bold">{conf.name} - {currentPage.name.fieldValue}</p>
   </div>
 
   <div class="right">
