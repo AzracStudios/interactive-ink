@@ -145,6 +145,7 @@
         currentHistory.push(newestEntry);
         FileHistory.set(currentHistory);
         HistoryIndex.set(currentHistory.length - 1);
+        console.log(currentHistory);
       }
     })();
 

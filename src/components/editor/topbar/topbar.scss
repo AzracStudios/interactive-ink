@@ -61,15 +61,16 @@
       display: flex;
       gap: 1rem;
       align-items: center;
+
       .menu-item {
         position: relative;
-
+        
         .disp {
           font-weight: bold;
           cursor: pointer;
           user-select: none;
         }
-
+        
         .opt {
           position: absolute;
           z-index: 95;

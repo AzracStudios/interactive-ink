@@ -6,6 +6,8 @@
     HistoryIndex,
     ProjectConfiguration,
     ProjectData,
+    SelectedElement,
+    Clipboard,
   } from "../../../globalStore";
   import { saveProject } from "../../../lib/pocketbase";
   import "./topbar.scss";
@@ -74,19 +76,37 @@
         {
           title: "Cut",
           do: () => {
-            alert("CUT");
+            let selected = get(SelectedElement);
+            if (!selected) return;
+            Clipboard.set(structuredClone(selected));
+            let currentPage = get(CurrentPage);
+            delete currentPage.components[selected.id];
+            CurrentPage.set(currentPage);
+            SelectedElement.set(null);
           },
         },
         {
           title: "Copy",
           do: () => {
-            alert("COPY");
+            let selected = get(SelectedElement);
+            if (!selected) return;
+            Clipboard.set(structuredClone(selected));
+            console.log(get(Clipboard))
           },
         },
         {
           title: "Paste",
           do: () => {
-            alert("PASTE");
+            SelectedElement.set(null);
+            let element = get(Clipboard);
+            let currentPage = get(CurrentPage);
+            let id = crypto.randomUUID();
+            element.id = id;
+            currentPage.components[id] = element;
+            element.transform.position.fieldValue.x += 30;
+            element.transform.position.fieldValue.y += 30; 
+            CurrentPage.set(currentPage);
+            SelectedElement.set(get(CurrentPage).components[element.id]);
           },
         },
       ],
