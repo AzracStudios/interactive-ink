@@ -3,6 +3,11 @@ import type { Project } from "../types";
 const url = "https://interactive-ink.pockethost.io";
 const pb = new PocketBase(url);
 
+export async function fetchProjects(): Promise<any> {
+  const proj = await pb.collection("projects").getFullList();
+  return proj;
+}
+
 export async function loadProject(id: string): Promise<Project> {
   const proj = await pb.collection("projects").getOne(id);
   return {
@@ -12,6 +17,16 @@ export async function loadProject(id: string): Promise<Project> {
 }
 
 export async function saveProject(data: Project): Promise<number> {
+  let today = new Date();
+  data.config.lastModified = {
+    day: today.getDate(),
+    month: today.getMonth(),
+    year: today.getFullYear(),
+    hours: today.getHours(),
+    minutes: today.getMinutes(),
+    seconds: today.getSeconds()
+  }
+  
   const proj = await pb
     .collection("projects")
     .update(data.config.id, { project: data });

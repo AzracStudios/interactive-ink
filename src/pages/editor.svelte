@@ -13,10 +13,15 @@
   import { onMount } from "svelte";
   import { fetchImages, loadProject } from "../lib/pocketbase";
   import type { Project } from "../types";
-  import Image from "../components/renderer/image.svelte";
+  import "./editor.scss";
+  import { sleep } from "../utils";
+  import Loader from "../components/shared/loader.svelte";
 
   let loaded = false;
   $: loaded;
+
+  let loaderOut = false;
+  $: loaderOut;
 
   export let params;
 
@@ -27,9 +32,15 @@
     ProjectConfiguration.set(project.config);
     ProjectData.set(project.data);
     CurrentPage.set(project.data[0]);
+    loaderOut = true;
+    await sleep(500);
     loaded = true;
   });
 </script>
+
+<svelte:head>
+  <title>Interactive Ink - Editor</title>
+</svelte:head>
 
 {#if loaded}
   <div class="editor">
@@ -44,21 +55,6 @@
   </div>
 {/if}
 
-<style lang="scss">
-  .editor {
-    font-family: "Poppins", sans-serif;
-  }
-
-  .vertical_flex {
-    display: flex;
-    flex-direction: column;
-    height: 100svh;
-  }
-
-  .horizontal_flex {
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
-    overflow: hidden;
-  }
-</style>
+{#if !loaded}
+  <Loader {loaderOut}/>
+{/if}

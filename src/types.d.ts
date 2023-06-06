@@ -36,6 +36,7 @@ export interface Transform {
   position: Field<Vector2>;
   rotation: Field<number>;
   scale: Field<Vector2>;
+  zIndex: Field<number>;
 }
 
 export interface Field<T> {
@@ -43,7 +44,7 @@ export interface Field<T> {
   fieldName: string;
   fieldValue: T;
   fieldDefault?: T;
-  fieldOptions?: any[];
+  fieldOptions?: T[];
 }
 
 export interface Component<T> {
@@ -53,20 +54,35 @@ export interface Component<T> {
   type: string;
   animation?: Animation;
   loaded: boolean;
-  renderPriority: number;
   propertiesSortOrder: string[];
-  properties?: T;
+  effects: { shadow: Shadow; blur: Blur; outline: Outline };
+  properties: T;
 }
 
-export interface Animation {
-  from: Component;
-  to: Component;
-  delay: number;
-  duration: number;
-  timingFunction: string;
-  onBegin: () => {} | undefined;
-  onUpdate: () => {} | undefined;
-  onEnd: () => {} | undefined;
+export interface Animation<T> {
+  property: Field<string>;
+  from: Field<T>;
+  to: Field<T>;
+  delay: Field<number>;
+  duration: Field<number>;
+  timingFunction: Field<string>;
+}
+
+export interface Shadow {
+  offset: Field<Vector2>;
+  blur: Field<number>;
+  opacity: Field<number>;
+  color: Field<string>;
+}
+
+export interface Blur {
+  blur: Field<number>;
+}
+
+export interface Outline {
+  width: Field<number>;
+  strokeStyle: Field<string>;
+  color: Field<string>;
 }
 
 export interface Page {
@@ -87,13 +103,17 @@ export enum Direction {
 export interface Image {
   src: Field<string>;
   alt: Field<string>;
-  outlineColor: Field<string>;
-  outlineWidth: Field<number>;
+  borderRadius: Field<number>;
   brightness: Field<number>;
   contrast: Field<number>;
   saturation: Field<number>;
   hue: Field<number>;
   sepia: Field<number>;
+}
+
+export interface Rect {
+  color: Field<string>;
+  borderRadius: Field<number>;
 }
 
 export interface Text {
@@ -104,7 +124,7 @@ export interface Text {
   lineHeight: Field<number>;
   bold?: Field<boolean>;
   underline?: Field<boolean>;
-  alignment: Field<string[]>;
+  alignment: Field<string>;
 }
 
 export type ApplicationMode = "view" | "edit";

@@ -1,6 +1,6 @@
-import type { Component, Text } from "../types";
+import type { Component, Rect } from "../types";
 
-export const TextTemplate: Component<Text> = {
+export const RectTemplate: Component<Rect> = {
   id: "sample-id",
   transform: {
     position: {
@@ -26,34 +26,32 @@ export const TextTemplate: Component<Text> = {
         y: 145,
       },
     },
-    
 
     zIndex: {
       fieldType: "Number",
       fieldName: "Render Priority",
       fieldValue: 0,
     },
-
   },
-  type: "text",
-  name: "Text",
+  type: "rect",
+  name: "Rect",
   loaded: true,
   effects: {
     shadow: {
       offset: {
         fieldName: "Offset",
         fieldType: "Vector2",
-        fieldValue: {x: 0, y: 0},
+        fieldValue: { x: 0, y: 0 },
       },
       blur: {
         fieldName: "Blur",
         fieldType: "Number",
-        fieldValue: 0
+        fieldValue: 0,
       },
       color: {
         fieldName: "Color",
         fieldType: "Color",
-        fieldValue: "#000000"
+        fieldValue: "#000000",
       },
       opacity: {
         fieldName: "Opacity",
@@ -67,7 +65,7 @@ export const TextTemplate: Component<Text> = {
       blur: {
         fieldName: "Blur",
         fieldType: "Number",
-        fieldValue: 0
+        fieldValue: 0,
       },
     },
 
@@ -75,68 +73,35 @@ export const TextTemplate: Component<Text> = {
       width: {
         fieldName: "Width",
         fieldType: "Number",
-        fieldValue: 0
+        fieldValue: 0,
       },
       strokeStyle: {
         fieldName: "Stroke Style",
         fieldType: "Enum",
         fieldValue: "solid",
-        fieldOptions: ["solid", "dashed"]
+        fieldOptions: ["solid", "dashed"],
       },
       color: {
         fieldName: "Color",
         fieldType: "Color",
-        fieldValue: "#000000"
-      }
-    }
+        fieldValue: "#000000",
+      },
+    },
   },
   propertiesSortOrder: [
-    "text",
-    "fontFamily",
-    "fontSize",
-    "lineHeight",
-    "alignment",
     "color",
-    "bold",
-    "underline",
+    "borderRadius"
   ],
   properties: {
-    text: {
-      fieldType: "TextArea",
-      fieldName: "Text",
-      fieldValue: "Text",
-    },
-    fontFamily: {
-      fieldType: "FontEnum",
-      fieldName: "Font",
-      fieldValue: "Poppins",
-    },
-
-    fontSize: { fieldType: "Number", fieldName: "Size", fieldValue: 100 },
-
-    lineHeight: {
-      fieldType: "Number",
-      fieldName: "Line Height",
-      fieldValue: 0,
-    },
-
-    alignment: {
-      fieldType: "Enum",
-      fieldName: "Align",
-      fieldOptions: ["Left", "Right", "Center"],
-      fieldValue: "Left",
-    },
-
     color: {
       fieldType: "Color",
       fieldName: "Color",
       fieldValue: "#000000",
     },
-    bold: { fieldType: "Boolean", fieldName: "Bold", fieldValue: false },
-    underline: {
-      fieldType: "Boolean",
-      fieldName: "Underline",
-      fieldValue: false,
-    },
+    borderRadius: {
+        fieldType: "Number",
+        fieldName: "Border Radius",
+        fieldValue: 0
+    }
   },
 };

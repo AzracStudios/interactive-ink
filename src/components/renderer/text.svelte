@@ -8,6 +8,8 @@
   } from "../../globalStore";
   import type { ApplicationMode, Component, Text } from "../../types";
   import Interactable from "../shared/interactable.svelte";
+  import { cssHexToRGBA } from "../../utils";
+  import FieldBuilder from "../editor/inspector/fieldBuilder.svelte";
 
   export let component: Component<Text>;
   $: component;
@@ -40,16 +42,17 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
     class="text"
+    bind:this={textDOM}
     style={`
     width: ${component.transform.scale.fieldValue.x}px;
     height:${component.transform.scale.fieldValue.y}px;
-    font-family: ${component.properties.fontFamily.fieldValue}; 
     font-size: ${component.properties.fontSize.fieldValue}px; 
     color: ${component.properties.color.fieldValue};
-    z-index: ${component.renderPriority};
+    z-index: ${component.transform.zIndex.fieldValue};
     left: ${component.transform.position.fieldValue.x}px;
     top: ${component.transform.position.fieldValue.y}px;
     transform:rotateZ(${component.transform.rotation.fieldValue}deg);
+    
     ${
       component.properties.bold.fieldValue
         ? "font-weight:bold"
@@ -67,10 +70,20 @@
         on:mousedown={() => {
           MovingSelected.set(true);
         }}
-        bind:this={textDOM}
         style={`
         width: ${component.transform.scale.fieldValue.x}px;
         height:${component.transform.scale.fieldValue.y}px;
+        font-family: ${component.properties.fontFamily.fieldValue}; 
+        outline: ${component.effects.outline.width.fieldValue}px ${
+          component.effects.outline.strokeStyle.fieldValue
+        } ${component.effects.outline.color.fieldValue};
+        text-shadow: ${component.effects.shadow.offset.fieldValue.x}px ${
+          component.effects.shadow.offset.fieldValue.y
+        }px ${component.effects.shadow.blur.fieldValue}px ${cssHexToRGBA(
+          component.effects.shadow.color.fieldValue,
+          component.effects.shadow.opacity.fieldValue
+        )};
+       filter: blur(${component.effects.blur.blur.fieldValue}px);
       line-height: ${
         component.properties.lineHeight.fieldValue == 0
           ? "normal"

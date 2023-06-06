@@ -16,6 +16,13 @@
       temp[fieldKey].fieldValue = property.fieldValue;
       return CurrentPage.set(temp);
     }
+
+    if (["blur", "shadow", "outline"].includes(writeTo)) {
+      let temp = get(SelectedElement);
+      temp.effects[writeTo][fieldKey].fieldValue = property.fieldValue;
+      return SelectedElement.set(temp);
+    }
+
     let temp = get(SelectedElement);
     temp[writeTo][fieldKey].fieldValue = property.fieldValue;
     SelectedElement.set(temp);
@@ -111,14 +118,14 @@
         />
       {/if}
       {#if property.fieldType == "Image"}
-      <div style="width: 100%%;">
-        <button
-          class="action_button"
-          on:click={() => {
-            selectImage = true;
-          }}>Select Image</button
-        >
-      </div>
+        <div style="width: 100%%;">
+          <button
+            class="action_button"
+            on:click={() => {
+              selectImage = true;
+            }}>Select Image</button
+          >
+        </div>
       {/if}
 
       {#if property.fieldType == "Boolean"}

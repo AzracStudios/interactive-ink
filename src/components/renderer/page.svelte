@@ -4,6 +4,7 @@
   import ComponentRenderer from "./componentRenderer.svelte";
   export let page: Page;
   $: page;
+
 </script>
 
 {#if page.loaded}

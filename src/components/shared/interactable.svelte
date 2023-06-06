@@ -120,10 +120,10 @@
     color: inherit;
     position: relative;
     cursor: move;
-
+    
     .scale {
-      cursor: scale;
       * {
+        z-index: 100;
         width: 30px;
         aspect-ratio: 1;
         background-color: #019aff;

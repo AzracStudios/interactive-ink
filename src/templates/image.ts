@@ -2,7 +2,6 @@ import type { Component, Image } from "../types";
 
 export const ImageTemplate: Component<Image> = {
   id: "sample-id",
-  renderPriority: 0,
   transform: {
     position: {
       fieldType: "Vector2",
@@ -27,15 +26,72 @@ export const ImageTemplate: Component<Image> = {
         y: 500,
       },
     },
+
+    zIndex: {
+      fieldType: "Number",
+      fieldName: "Render Priority",
+      fieldValue: 0,
+    },
   },
   type: "image",
   name: "Image",
   loaded: true,
+  effects: {
+    blur: {
+      blur: {
+        fieldName: "Blur",
+        fieldType: "Number",
+        fieldValue: 0,
+      },
+    },
+
+    outline: {
+      width: {
+        fieldName: "Width",
+        fieldType: "Number",
+        fieldValue: 0,
+      },
+      strokeStyle: {
+        fieldName: "Stroke Style",
+        fieldType: "Enum",
+        fieldValue: "solid",
+        fieldOptions: ["solid", "dashed"],
+      },
+      color: {
+        fieldName: "Color",
+        fieldType: "Color",
+        fieldValue: "#000000",
+      },
+    },
+
+    shadow: {
+      offset: {
+        fieldName: "Offset",
+        fieldType: "Vector2",
+        fieldValue: { x: 0, y: 0 },
+      },
+      blur: {
+        fieldName: "Blur",
+        fieldType: "Number",
+        fieldValue: 0,
+      },
+      opacity: {
+        fieldName: "Opacity",
+        fieldType: "Number",
+        fieldValue: 0,
+        fieldOptions: [0, 100],
+      },
+      color: {
+        fieldName: "Color",
+        fieldType: "Color",
+        fieldValue: "#000000",
+      },
+    },
+  },
   propertiesSortOrder: [
     "src",
     "alt",
-    "outlineColor",
-    "outlineWidth",
+    "borderRadius",
     "brightness",
     "contrast",
     "saturation",
@@ -54,19 +110,11 @@ export const ImageTemplate: Component<Image> = {
       fieldName: "Alt",
       fieldValue: null,
     },
-
-    outlineColor: {
-      fieldType: "Color",
-      fieldName: "Outline Color",
-      fieldValue: "#000000",
-    },
-
-    outlineWidth: {
+    borderRadius: {
       fieldType: "Number",
-      fieldName: "Outline Width",
+      fieldName: "Border Radius",
       fieldValue: 0,
     },
-
     brightness: {
       fieldType: "Range",
       fieldOptions: [0, 150],

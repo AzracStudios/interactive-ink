@@ -65,6 +65,23 @@
       {/each}
     </div>
 
+    <div class="hr" />
+
+    <p class="head">Effects</p>
+
+    <div class="fields">
+      {#each Object.keys(selected.effects) as key}
+        <p class="thead">{key}</p>
+        {#each Object.keys(selected.effects[key]) as k}
+          <FieldBuilder
+            fieldKey={k}
+            property={selected.effects[key][k]}
+            writeTo={key}
+          />
+        {/each}
+      {/each}
+    </div>
+
     <div class="space" />
   {:else}
     <p class="head">Page Settings</p>

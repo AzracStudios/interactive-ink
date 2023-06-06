@@ -1,0 +1,14 @@
+@import "../styles/variables";
+
+.canvas-wrapper-viewer {
+    height: 100vh;
+    flex: 2;
+    position: relative;
+    background-color: #f3ebef;
+    overflow-x: hidden;
+    .viewer_canvas {
+      position: absolute;
+      width: fit-content;
+    }
+  }
+  

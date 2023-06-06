@@ -1,3 +1,5 @@
+@import "../../../styles/variables";
+
 .editor__inspector {
   overflow-x: hidden;
   overflow-y: auto;
@@ -8,8 +10,17 @@
   .space {
     height: 2rem;
   }
+
   .head {
     margin-left: 1rem;
+  }
+
+  .thead {
+    margin-left: 1rem;
+    font-weight: bold;
+    color: $color-black;
+    text-transform: capitalize;
+    margin-top: 1rem;
   }
 
   .fields {

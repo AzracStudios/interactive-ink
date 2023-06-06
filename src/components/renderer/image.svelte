@@ -6,6 +6,7 @@
     ViewScaleFactor,
   } from "../../globalStore";
   import type { ApplicationMode, Component, Image } from "../../types";
+  import { cssHexToRGBA } from "../../utils";
   import Interactable from "../shared/interactable.svelte";
 
   export let component: Component<Image>;
@@ -42,7 +43,7 @@
       position: absolute;
       left: ${component.transform.position.fieldValue.x}px;
       top: ${component.transform.position.fieldValue.y}px;
-      z-index: ${component.renderPriority};
+      z-index: ${component.transform.zIndex.fieldValue};
       transform: rotateZ(${component.transform.rotation.fieldValue}deg);
       `}
   >
@@ -54,8 +55,23 @@
           width: ${component.transform.scale.fieldValue.x}px;
           height: ${component.transform.scale.fieldValue.y}px; 
           user-select:none;
-          filter: brightness(${component.properties.brightness.fieldValue}%) contrast(${component.properties.contrast.fieldValue}%) saturate(${component.properties.saturation.fieldValue}%) hue-rotate(${component.properties.hue.fieldValue}deg) sepia(${component.properties.sepia.fieldValue}%);
-        `}
+          filter:blur(${component.effects.blur.blur.fieldValue}px) brightness(${
+          component.properties.brightness.fieldValue
+        }%) contrast(${component.properties.contrast.fieldValue}%) saturate(${
+          component.properties.saturation.fieldValue
+        }%) hue-rotate(${component.properties.hue.fieldValue}deg) sepia(${
+          component.properties.sepia.fieldValue
+        }%) drop-shadow(${component.effects.shadow.offset.fieldValue.x}px ${
+          component.effects.shadow.offset.fieldValue.y
+        }px ${component.effects.shadow.blur.fieldValue}px ${cssHexToRGBA(
+          component.effects.shadow.color.fieldValue,
+          component.effects.shadow.opacity.fieldValue
+        )});
+          outline: ${component.effects.outline.width.fieldValue} ${
+          component.effects.outline.strokeStyle.fieldValue
+        } ${component.effects.outline.color.fieldValue};
+          border-radius: ${component.properties.borderRadius.fieldValue}px;
+      `}
         on:click={() => {
           SelectedElement.set(component);
         }}

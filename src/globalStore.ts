@@ -6,9 +6,12 @@ import type {
   Component,
   Direction,
 } from "./types";
+import { FileHistoryNode } from "./utils";
 
 export const Mode = writable<ApplicationMode>();
 export const CurrentPage = writable<Page>();
+export const FileHistory = writable<Component<any>[]>([]);
+export const HistoryIndex = writable<number>(0);
 export const SelectedElement = writable<Component<any>>();
 export const MovingSelected = writable<boolean>();
 export const ScalingSelectedX = writable<Direction | null>();

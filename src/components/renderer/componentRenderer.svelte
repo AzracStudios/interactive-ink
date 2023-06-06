@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Component } from "../../types";
   import Image from "./image.svelte";
+  import Rect from "./rect.svelte";
   import TextRenderer from "./text.svelte";
 
   export let component: Component<any>;
@@ -15,3 +16,8 @@
 {#if component.type == "image"}
   <Image {component} />
 {/if}
+
+{#if component.type == "rect"}
+  <Rect {component} />
+{/if}
+

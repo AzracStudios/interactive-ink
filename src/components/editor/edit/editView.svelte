@@ -8,10 +8,12 @@
     type ProjectConfig,
     type Vector2,
   } from "../../../types.d";
-  import { getHeight, sleep } from "../../../utils";
+  import { FileHistoryNode, getHeight, sleep } from "../../../utils";
   import {
     CurrentPage,
+    FileHistory,
     Fonts,
+    HistoryIndex,
     Mode,
     MovingSelected,
     ProjectConfiguration,
@@ -21,6 +23,7 @@
     ViewScaleFactor,
   } from "../../../globalStore";
   import { get } from "svelte/store";
+  import { replace } from "svelte-spa-router";
 
   let canvas: HTMLDivElement;
 
@@ -118,16 +121,43 @@
   });
 
   onmousedown = (e: MouseEvent) => {
+    if (get(SelectedElement) && get(FileHistory).length == 0) {
+      let currentHistory = get(FileHistory);
+      let newestEntry = structuredClone(get(SelectedElement));
+      currentHistory.push(newestEntry);
+      FileHistory.set(currentHistory);
+    }
     if ((e.target as HTMLElement).classList.contains("page")) {
       SelectedElement.set(null);
     }
   };
 
   onmouseup = () => {
+    (() => {
+      if (
+        get(SelectedElement) &&
+        (movingSelected || scalingSelectedX || scalingSelectedY)
+      ) {
+        let currentHistory = get(FileHistory);
+        let newestEntry = structuredClone(get(SelectedElement));
+        if (get(HistoryIndex) > 0)
+          currentHistory = currentHistory.slice(0, get(HistoryIndex) + 1);
+        currentHistory.push(newestEntry);
+        FileHistory.set(currentHistory);
+        HistoryIndex.set(currentHistory.length - 1);
+      }
+    })();
+
     MovingSelected.set(null);
     ScalingSelectedX.set(null);
     ScalingSelectedY.set(null);
   };
+
+  HistoryIndex.subscribe((val) => {
+    let replacement = structuredClone(get(FileHistory))[val];
+    if (!replacement) return;
+    SelectedElement.set(replacement);
+  });
 
   const handleMouse = (e: MouseEvent) => {
     let selected = get(SelectedElement);

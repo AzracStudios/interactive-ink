@@ -5,6 +5,7 @@
   import { get } from "svelte/store";
   import { Fonts, ProjectConfiguration, ProjectData } from "./globalStore";
   import { generateFontString } from "./utils";
+  import Home from "./pages/home.svelte";
 
   let fonts: string[];
   $: fonts;
@@ -29,7 +30,9 @@
 
 <Router
   routes={{
-    "/view": View,
+    "/home": Home,
+    "/": Home,
+    "/view/:id": View,
     "/editor/:id": Editor,
   }}
 />
